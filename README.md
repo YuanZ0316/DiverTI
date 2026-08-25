@@ -1,70 +1,70 @@
 # DiverTI
 
-**DiverTI: 通用轨迹推断框架（单细胞与空间转录组）**
+**DiverTI: A Versatile Trajectory Inference Framework for Single-Cell and Spatial Transcriptomics**
 
-DiverTI 是一个用于单细胞和空间转录组数据通用轨迹推断的 Python 框架。它整合了图特征建模、增量表达多样性分析和图注意力自编码器，能够重建细胞状态转换、发育轨迹和组织动态，呈现生物学方向性。
+DiverTI is a Python framework for versatile trajectory inference from single-cell and spatial transcriptomics data. It integrates graph feature modeling, incremental expression diversity analysis, and a graph attention autoencoder to reconstruct cell state transitions, developmental trajectories, and tissue dynamics, revealing biological directionality.
 
-本仓库提供了安装说明、示例数据集以及展示完整分析流程的 Jupyter Notebook。
+This repository provides installation instructions, example datasets, and Jupyter Notebooks demonstrating the complete analysis workflow.
 
 ---
 
-## 安装
+## Installation
 
-### 1. 创建并激活 conda 环境
+### 1. Create and activate a conda environment
 
-我们建议使用 Python 3.8（环境已预先配置好所有依赖）：
+We recommend using Python 3.8 (the environment comes with all dependencies pre-configured):
 
 ```bash
 conda env create -f DiverTI_env.yml
 conda activate DiverTI
 ```
 
-### 2. 依赖项
+### 2. Dependencies
 
-核心依赖（已在 `DiverTI_env.yml` 中锁定版本）：
+Core dependencies (version-locked in `DiverTI_env.yml`):
 
 - Python 3.8
-- PyTorch 1.12+（推荐 GPU 版本）
+- PyTorch 1.12+ (GPU version recommended)
 - Scanpy 1.9
 - CellRank 2.0
 - Scvelo 0.3
-- NumPy、Pandas、SciPy、Matplotlib、scikit-learn 等
+- NumPy, Pandas, SciPy, Matplotlib, scikit-learn, etc.
 
-完整列表请参阅 `DiverTI_env.yml` 文件。
+See `DiverTI_env.yml` for the full list.
 
 ---
 
-## 数据准备
+## Data Preparation
 
-本仓库当前包含以下本地数据集（占位文件夹）：
+This repository currently contains the following local datasets (placeholder folders):
 
 ```
 simulated_data/
 realdata/
 ```
 
-> **注意**：由于文件大小限制，真实数据集未直接包含在本仓库中。请在使用相应分析流程前，先自行下载数据集。
+> **Note**: Due to file size limitations, the real datasets are not directly included in this repository. Please download the datasets yourself before running the corresponding analysis workflows.
 
-### 数据集下载
+### Dataset Download
 
-所有数据已通过百度网盘共享，具体信息如下：
+All data is shared via Baidu Netdisk, as follows:
 
-| 项目 | 内容 |
+| Item | Content |
 | --- | --- |
-| 文件夹名称 | `DiverTI_data` |
-| 链接 | https://pan.baidu.com/s/1vLHGqJsSIgpa59JZUw0EFQ?pwd=ej6v |
-| 提取码 | `ej6v` |
+| Folder name | `DiverTI_data` |
+| Link | https://pan.baidu.com/s/1vLHGqJsSIgpa59JZUw0EFQ?pwd=ej6v |
+| Access code | `ej6v` |
 
-下载后，您将获得以下两个子目录：
+After downloading, you will obtain the following two subdirectories:
 
-- `simulated_data/` —— 包含用于方法验证和测试的模拟数据集（含单细胞和空间数据）；
-- `realdata/` —— 包含实际测序或实验获取的真实空间转录组数据（如 DLPFC、TBI 模型、ICC 等）。
+- `simulated_data/` — contains simulated datasets for method validation and testing (including single-cell and spatial data);
+- `realdata/` — contains real spatial transcriptomics data from actual sequencing or experiments (e.g., DLPFC, TBI model, ICC, etc.).
 
-请将下载后的 `simulated_data` 和 `realdata` 文件夹放置于仓库根目录下（或按代码中指定的路径存放），即可运行对应的 Jupyter Notebook。
+Place the downloaded `simulated_data` and `realdata` folders in the repository root directory (or the paths specified in the code) to run the corresponding Jupyter Notebooks.
 
 ---
 
-## 仓库目录结构（示例）
+## Repository Structure (Example)
 
 ```text
 DiverTI/
@@ -87,27 +87,27 @@ DiverTI/
 
 ---
 
-## 使用示例
+## Usage Examples
 
-主要的示例 Notebook 为 `st_continuous.ipynb`，该文件演示了一套完整的空间转录组轨迹分析流程，具体步骤包括：
+The main example Notebook is `st_continuous.ipynb`, which demonstrates a complete spatial transcriptomics trajectory analysis workflow, including the following steps:
 
-1. 加载空间转录组数据（支持真实数据或模拟数据）
-2. 数据预处理（归一化、对数变换、筛选高变基因）
-3. 构建细胞空间邻接图（基于 PCA 空间或物理坐标）
-4. 构建基因共表达网络（GeneNet）
-5. 计算图傅里叶变换（GFT）特征（基因域和空间域）
-6. 训练 DiverTI 模型，获取细胞低维嵌入表示
-7. 基于嵌入构建自适应转移矩阵，推断细胞分化轨迹
-8. 计算拟时序（pseudotime）并可视化轨迹树
-9. 对比真实发育阶段标签（若可用）评估结果
+1. Load spatial transcriptomics data (supports both real and simulated data)
+2. Data preprocessing (normalization, log transformation, highly variable gene selection)
+3. Construct the cell spatial adjacency graph (based on PCA space or physical coordinates)
+4. Construct the gene co-expression network (GeneNet)
+5. Compute graph Fourier transform (GFT) features (gene domain and spatial domain)
+6. Train the DiverTI model to obtain low-dimensional cell embeddings
+7. Build an adaptive transition matrix from the embeddings to infer cell differentiation trajectories
+8. Compute pseudotime and visualize the trajectory tree
+9. Evaluate results against real developmental stage labels (if available)
 
-此外，您还可以使用以下其他 Notebook 进行特定数据集的分析：
+In addition, you can use the following Notebooks for analysis of specific datasets:
 
-| Notebook | 用途 |
+| Notebook | Description |
 | --- | --- |
-| `sc_linear1.ipynb` | 单细胞数据的轨迹推断示例（线性分化） |
-| `01.DLPFC.ipynb` | 人类背外侧前额叶皮层（DLPFC）空间转录组数据的层次结构分析 |
-| `02.TBI.ipynb` | 创伤性脑损伤（TBI）再生过程的空间动态轨迹 |
-| `03.real.ipynb` | 其他真实单细胞或空间转录组数据的通用分析入口 |
+| `sc_linear1.ipynb` | Trajectory inference example for single-cell data (linear differentiation) |
+| `01.DLPFC.ipynb` | Hierarchical structure analysis of human dorsolateral prefrontal cortex (DLPFC) spatial transcriptomics data |
+| `02.TBI.ipynb` | Spatial dynamic trajectories of the traumatic brain injury (TBI) regeneration process |
+| `03.real.ipynb` | General analysis entry for other real single-cell or spatial transcriptomics data |
 
-所有 Notebook 均依赖 `DiverTI/` 模块中的核心函数（utils、genenet、train 等），并支持在 GPU 或 CPU 环境下运行。您只需将数据按 `realdata/` 和 `simulated_data/` 文件夹组织好，并修改代码中的 `DATA_PATH` 和 `ROOT_LABEL` 参数即可适配自己的数据。
+All Notebooks rely on the core functions in the `DiverTI/` module (utils, genenet, train, etc.) and support running on GPU or CPU. Simply organize your data into the `realdata/` and `simulated_data/` folders and modify the `DATA_PATH` and `ROOT_LABEL` parameters in the code to adapt to your own data.
