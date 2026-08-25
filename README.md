@@ -35,7 +35,27 @@ NumPy、Pandas、SciPy、Matplotlib、scikit‑learn 等
 
 ## 数据准备
 
-本仓库目前包含以下本地数据集和 Jupyter Notebook 文件：
+数据准备
+本仓库当前包含以下本地数据集：
+
+simulated_data/
+
+realdata/
+
+由于文件大小限制，真实数据集未直接包含在本仓库中。请在使用相应分析流程前，先自行下载数据集。
+
+数据集下载
+所有数据已通过百度网盘共享，具体信息如下：
+
+文件夹名称：DiverTI_data
+链接：https://pan.baidu.com/s/1vLHGqJsSIgpa59JZUw0EFQ?pwd=ej6v
+下载后，您将获得以下两个子目录：
+
+simulated_data/ —— 包含用于方法验证和测试的模拟数据集；
+
+realdata/ —— 包含实际测序或实验获取的真实空间转录组数据
+
+请将下载后的 simulated_data 和 realdata 文件夹放置于仓库根目录下（或按代码中指定的路径存放），即可运行对应的 Jupyter Notebook。
 DiverTI/
 ├── simulated data/
 │   ├── scdata/
